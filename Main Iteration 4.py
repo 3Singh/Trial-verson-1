@@ -7,9 +7,11 @@ import json
 import datetime
 import customtkinter as ck
 
+# Sets the customtkinter theme and colour
 ck.set_appearance_mode("dark")
 ck.set_default_color_theme("blue")
 
+# Created a class and used variables inside for my layout
 class InjuryPreventionApp:
     def __init__(self, root):
         self.root_tk = ck.CTk()
@@ -48,6 +50,7 @@ class InjuryPreventionApp:
         self.bottom_frame2.grid(row=2, column=0, sticky="ew")
         self.button_frame.grid(row=3, column=0, sticky="ew")
 
+        # This is to make it so the user writes something/lack of value
         self.first_name_entry = None
         self.last_name_entry = None
         self.age_entry = None
@@ -114,7 +117,7 @@ class InjuryPreventionApp:
         self.bottom_frame1.tkraise()
 
     def broken_short(self):
-        self.text.delete("1.0", tk.END)
+        self.text.delete("1.0", tk.END) # Used to clear the widget, leaving it empty
         self.show_user_info()
         self.text.insert(tk.END, """Broken Bone:\n\nYou must get medical help right away if you think you may have a broken bone. A broken bone, also known as a fracture, needs to be properly assessed, treated, and cared for in order to ensure appropriate healing and reduce any potential consequences. If you think you may have a broken bone, you should take the following actions:\n1.Halt all action\n2.Apply Ice\n3.Elevate the injured limb\n4.Diagnosis and treatment\n5.Adhere to medical advice\n6.Rest and recuperation\n""")
 
@@ -164,6 +167,7 @@ class InjuryPreventionApp:
         elif self.selected_problem == 'Bruise':
             self.bruise_short()
 
+    # Submit button information
     def submit_info(self):
         text_frame = ck.CTkFrame(self.bottom_frame2)
         text_frame.grid(row=0, column=0, padx=10, pady=10)
@@ -174,7 +178,7 @@ class InjuryPreventionApp:
         show_more = ck.CTkButton(self.button_frame, text="Show More", command=self.show_more)
         show_more.grid(row=0, column=0, padx=10, pady=10)
 
-
+        # Using RegEx for error prevention
         if re.match(r'^[a-zA-Z\s]+$', self.first_name):
             pass
         else:
@@ -193,7 +197,7 @@ class InjuryPreventionApp:
         else:
             messagebox.showinfo("Error", "Please enter a valid age")
             return
-        if int(self.age) > 99 or int(self.age) < 5:
+        if int(self.age) > 99 or int(self.age) < 5: # Using a boundary for user to enter proper age
             messagebox.showinfo("Invalid Age", f"Please enter a valid age, you entered {self.age} years old")
             return
         self.height = self.height_entry.get()
@@ -241,7 +245,7 @@ class InjuryPreventionApp:
         elif self.selected_problem == 'Bruise':
             self.bruise_short()
         self.bottom_frame2.tkraise()
-        current_date = datetime.datetime.now()
+        current_date = datetime.datetime.now() # Uses the current date/time
 
         # Format the current date in "dd/mm/yyyy hour:minute" format
         formatted_date = current_date.strftime("%d/%m/%Y %H:%M")
@@ -251,17 +255,17 @@ class InjuryPreventionApp:
 
         def read_json_from_file(self,file_path):
             try:
-                with open(file_path, 'r') as file:
+                with open(file_path, 'r') as file: # This opens the file in read mode
                     try:
                         data = json.load(file)
                     except:
                         data = []
-            except FileNotFoundError:
+            except FileNotFoundError: # If file is not found then this error occurs
                 data = []
             return data
 
         def write_json_to_file(self,file_path, data):
-            with open(file_path, 'w') as file:
+            with open(file_path, 'w') as file: # Uses as writing mode
                 json.dump(data, file, indent=2)
         # Initialize an empty dictionary to store the data
         data = {}
@@ -290,7 +294,7 @@ class InjuryPreventionApp:
 
         def show_medical(self):
             file_path = self.file_path
-            existing_data = read_json_from_file(self,file_path)
+            existing_data = read_json_from_file(self,file_path) # Uses this data to for past medical history applications
             text = ck.CTkTextbox(self.bottom_frame2, wrap=tk.WORD, width=300, height=250, padx=5, pady=5, font=('Helvetica', 12))
             text.grid(row=0, column=1, padx=10, pady=10)
             for entry in existing_data:
@@ -313,7 +317,8 @@ class InjuryPreventionApp:
                 self.dislocation()
             elif self.selected_problem == 'Bruise':
                 self.bruise()
-
+                
+    # This shows the user there details
     def show_user_info(self):
         user_info = f'First name: {self.first_name}\nLast name: {self.last_name}\nAge: {self.age} years old\nHeight: {self.height} cm\nWeight: {self.weight} kg\nEmail: {self.email_address}\nHealth Problem: {self.selected_problem}\n\n'
         self.text.insert(tk.END, user_info)
