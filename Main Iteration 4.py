@@ -17,7 +17,7 @@ class InjuryPreventionApp:
         self.root.title("Injury Prevention")
         self.root.geometry("840x600")
         self.root.config(bg = '#2b2b2b')
-        
+       
         self.root.grid_rowconfigure((0, 1, 2, 3), weight=1)
         self.root.grid_columnconfigure((0), weight=1)
 
@@ -41,7 +41,7 @@ class InjuryPreventionApp:
 
         self.button_frame.grid_rowconfigure((0), weight=1)
         self.button_frame.grid_columnconfigure((0, 1), weight=1)
-        
+       
         self.title_frame.grid(row=0, column=0, sticky="ew")
         self.top_frame.grid(row=1, column=0, sticky="ew")
         self.bottom_frame1.grid(row=2, column=0, sticky="ew")
@@ -72,7 +72,7 @@ class InjuryPreventionApp:
         dropdown.grid(row=5, column=1, padx=10, pady=5)
         dropdown_label = ck.CTkLabel(self.top_frame, text="Health problem:")
         dropdown_label.grid(row=5, column=0, padx=10, pady=5)
-        
+       
         self.logo_label = ck.CTkLabel(self.title_frame, text="Health Prevention Step-By-Step Analysis", font=ck.CTkFont(size=40, weight="bold"))
         self.logo_label.grid(row=0, column=1, padx=20, pady=(20, 10))
 
@@ -81,7 +81,7 @@ class InjuryPreventionApp:
         first_name_label.grid(row=0, column=0, padx=10, pady=5)
         self.first_name_entry = ck.CTkEntry(self.top_frame, font=('Helvetica', 12))
         self.first_name_entry.grid(row=0, column=1, padx=10, pady=5)
-        
+       
         last_name_label = ck.CTkLabel(self.top_frame, text="Last Name:")
         last_name_label.grid(row=1, column=0, padx=10, pady=5)
         self.last_name_entry = ck.CTkEntry(self.top_frame, font=('Helvetica', 12))
@@ -193,12 +193,17 @@ class InjuryPreventionApp:
         else:
             messagebox.showinfo("Error", "Please enter a valid age")
             return
-
+        if int(self.age) > 99 or int(self.age) < 5:
+            messagebox.showinfo("Invalid Age", f"Please enter a valid age, you entered {self.age} years old")
+            return
         self.height = self.height_entry.get()
         if re.match(r'^\d+$', self.height):
             pass
         else:
             messagebox.showinfo("Error", "Please enter a valid height")
+            return
+        if int(self.height) > 210 or int(self.height) < 60 :
+            messagebox.showinfo("Invalid Age", f"Please enter a valid height, you entered {self.height}cm")
             return
         self.weight = self.weight_entry.get()
         if re.match(r'^\d+$', self.weight):
@@ -206,6 +211,10 @@ class InjuryPreventionApp:
         else:
             messagebox.showinfo("Error", "Please enter a valid weight")
             return
+        if int(self.weight) > 150 or int(self.weight) < 40:
+            messagebox.showinfo("Invalid weight", f"Please enter a valid weight, you entered {self.weight}kg")
+            return
+       
 
         self.email_address = self.email_entry.get()
         if re.match(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$', self.email_address):
@@ -213,6 +222,7 @@ class InjuryPreventionApp:
         else:
             messagebox.showinfo("Error", "Please enter a valid email address")
             return
+       
 
         self.selected_problem = self.dropdown_var.get()
         if 'Select a Health Problem' in self.selected_problem:
@@ -291,7 +301,7 @@ class InjuryPreventionApp:
                             text.insert(tk.END, f"{key}: {value}\n")
                         text.insert(tk.END, '\n')
         # Stops command from automatically executing due to the self variable
-        medical_history = ck.CTkButton(self.button_frame , text="Medical History", command=lambda:show_medical(self)) 
+        medical_history = ck.CTkButton(self.button_frame , text="Medical History", command=lambda:show_medical(self))
         medical_history.grid(row=0, column=1, padx=10, pady=10)
 
     def show_more(self):
