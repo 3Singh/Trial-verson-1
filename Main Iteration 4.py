@@ -7,11 +7,12 @@ import json
 import datetime
 import customtkinter as ck
 
-# Sets the customtkinter theme and colour
+# Customtkinter colour settings
 ck.set_appearance_mode("dark")
 ck.set_default_color_theme("blue")
 
-# Created a class and used variables inside for my layout
+
+# Class to make appropriate frames
 class InjuryPreventionApp:
     def __init__(self, root):
         self.root_tk = ck.CTk()
@@ -19,7 +20,7 @@ class InjuryPreventionApp:
         self.root.title("Injury Prevention")
         self.root.geometry("840x600")
         self.root.config(bg = '#2b2b2b')
-       
+        
         self.root.grid_rowconfigure((0, 1, 2, 3), weight=1)
         self.root.grid_columnconfigure((0), weight=1)
 
@@ -43,14 +44,14 @@ class InjuryPreventionApp:
 
         self.button_frame.grid_rowconfigure((0), weight=1)
         self.button_frame.grid_columnconfigure((0, 1), weight=1)
-       
+        
         self.title_frame.grid(row=0, column=0, sticky="ew")
         self.top_frame.grid(row=1, column=0, sticky="ew")
         self.bottom_frame1.grid(row=2, column=0, sticky="ew")
         self.bottom_frame2.grid(row=2, column=0, sticky="ew")
         self.button_frame.grid(row=3, column=0, sticky="ew")
 
-        # This is to make it so the user writes something/lack of value
+        # Attribute has not been assigned and reset variable to empty
         self.first_name_entry = None
         self.last_name_entry = None
         self.age_entry = None
@@ -65,9 +66,7 @@ class InjuryPreventionApp:
         self.create_widgets()
 
     def create_widgets(self):
-
-        # Dropdown settings
- 
+        # Dropdown settings 
         problems = ['Broken Bone', 'Sprain', 'Dislocation', 'Bruise']
         self.dropdown_var = tk.StringVar()
         dropdown = Combobox(self.top_frame, width=27, textvariable=self.dropdown_var, values=problems)
@@ -75,7 +74,8 @@ class InjuryPreventionApp:
         dropdown.grid(row=5, column=1, padx=10, pady=5)
         dropdown_label = ck.CTkLabel(self.top_frame, text="Health problem:")
         dropdown_label.grid(row=5, column=0, padx=10, pady=5)
-       
+
+        # Heading settings
         self.logo_label = ck.CTkLabel(self.title_frame, text="Health Prevention Step-By-Step Analysis", font=ck.CTkFont(size=40, weight="bold"))
         self.logo_label.grid(row=0, column=1, padx=20, pady=(20, 10))
 
@@ -84,7 +84,7 @@ class InjuryPreventionApp:
         first_name_label.grid(row=0, column=0, padx=10, pady=5)
         self.first_name_entry = ck.CTkEntry(self.top_frame, font=('Helvetica', 12))
         self.first_name_entry.grid(row=0, column=1, padx=10, pady=5)
-       
+        
         last_name_label = ck.CTkLabel(self.top_frame, text="Last Name:")
         last_name_label.grid(row=1, column=0, padx=10, pady=5)
         self.last_name_entry = ck.CTkEntry(self.top_frame, font=('Helvetica', 12))
@@ -117,7 +117,7 @@ class InjuryPreventionApp:
         self.bottom_frame1.tkraise()
 
     def broken_short(self):
-        self.text.delete("1.0", tk.END) # Used to clear the widget, leaving it empty
+        self.text.delete("1.0", tk.END) # Delete the text after clicked on different health problem
         self.show_user_info()
         self.text.insert(tk.END, """Broken Bone:\n\nYou must get medical help right away if you think you may have a broken bone. A broken bone, also known as a fracture, needs to be properly assessed, treated, and cared for in order to ensure appropriate healing and reduce any potential consequences. If you think you may have a broken bone, you should take the following actions:\n1.Halt all action\n2.Apply Ice\n3.Elevate the injured limb\n4.Diagnosis and treatment\n5.Adhere to medical advice\n6.Rest and recuperation\n""")
 
@@ -156,6 +156,7 @@ class InjuryPreventionApp:
         self.show_user_info()
         self.text.insert(tk.END, """Bruise:\n\n1.Rest the wounded area to help it heal correctly. Avoid placing undue weight on the injury.\n\n2.Ice the injured area: During the first 48 hours, applying an ice pack wrapped in a cloth for 15-20 minutes every 1-2 hours will help reduce swelling and pain.\n\n3.Use a compression bandage to assist reduce swelling, but be careful not to apply it too tightly as this could aggravate circulation.\n\n4.Elevate the damaged area: Try to keep the bruised area higher than your heart. This may also aid in minimizing edema.\n\n5.Pain relief over-the-counter: If you're in pain, you can take acetaminophen or ibuprofen, which are both available over-the-counter. Always take your prescriptions as directed, and if you have any questions or are taking other medications, talk to a doctor.\n\n6.Aim to avoid applying heat to the damaged region for the first 48 hours as this could exacerbate swelling.\n\n7.Avoiding alcohol and blood-thinning drugs is advisable until the bruise has healed because both substances might worsen bleeding and bruising.\n\n8.Give your bruises some time to heal; bruises usually take a week or two to go away. Try to stay away from activities that can make the injury worse during this time.\n\n9.Inspect the bruise for any indications of infection, such as a rise in redness or temperature or the formation of pus. Get medical help right away if you encounter these symptoms.\n\nA healthcare professional should be consulted for an accurate assessment and treatment plan if the bruise is severe, coupled with significant pain, swelling, or other alarming symptoms, or if you are unsure about the nature of the injury.\n""")
 
+    # Dropdown options
     def on_dropdown_changed(self, event):
         self.selected_problem = self.dropdown_var.get()
         if self.selected_problem == 'Broken Bone':
@@ -166,8 +167,8 @@ class InjuryPreventionApp:
             self.dislocation_short()
         elif self.selected_problem == 'Bruise':
             self.bruise_short()
-
-    # Submit button information
+            
+    # Submit buttom information
     def submit_info(self):
         text_frame = ck.CTkFrame(self.bottom_frame2)
         text_frame.grid(row=0, column=0, padx=10, pady=10)
@@ -178,7 +179,7 @@ class InjuryPreventionApp:
         show_more = ck.CTkButton(self.button_frame, text="Show More", command=self.show_more)
         show_more.grid(row=0, column=0, padx=10, pady=10)
 
-        # Using RegEx for error prevention
+        # RegEx for error prevention
         if re.match(r'^[a-zA-Z\s]+$', self.first_name):
             pass
         else:
@@ -200,6 +201,7 @@ class InjuryPreventionApp:
         if int(self.age) > 99 or int(self.age) < 5: # Using a boundary for user to enter proper age
             messagebox.showinfo("Invalid Age", f"Please enter a valid age, you entered {self.age} years old")
             return
+
         self.height = self.height_entry.get()
         if re.match(r'^\d+$', self.height):
             pass
@@ -209,6 +211,7 @@ class InjuryPreventionApp:
         if int(self.height) > 210 or int(self.height) < 60 :
             messagebox.showinfo("Invalid Age", f"Please enter a valid height, you entered {self.height}cm")
             return
+        
         self.weight = self.weight_entry.get()
         if re.match(r'^\d+$', self.weight):
             pass
@@ -218,7 +221,6 @@ class InjuryPreventionApp:
         if int(self.weight) > 150 or int(self.weight) < 40:
             messagebox.showinfo("Invalid weight", f"Please enter a valid weight, you entered {self.weight}kg")
             return
-       
 
         self.email_address = self.email_entry.get()
         if re.match(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$', self.email_address):
@@ -226,16 +228,15 @@ class InjuryPreventionApp:
         else:
             messagebox.showinfo("Error", "Please enter a valid email address")
             return
-       
 
         self.selected_problem = self.dropdown_var.get()
         if 'Select a Health Problem' in self.selected_problem:
             messagebox.showinfo("Error", "Please select a health problem")
             return
 
-
         self.text.delete("1.0", tk.END)
-
+        
+        # What you see on external file  
         if self.selected_problem == 'Broken Bone':
             self.broken_short()
         elif self.selected_problem == 'Sprain':
@@ -245,28 +246,32 @@ class InjuryPreventionApp:
         elif self.selected_problem == 'Bruise':
             self.bruise_short()
         self.bottom_frame2.tkraise()
-        current_date = datetime.datetime.now() # Uses the current date/time
+        current_date = datetime.datetime.now()
 
         # Format the current date in "dd/mm/yyyy hour:minute" format
         formatted_date = current_date.strftime("%d/%m/%Y %H:%M")
 
+        # Inputing full user information
         full_info = f'First name: {self.first_name}\nLast name: {self.last_name}\nAge: {self.age} years old\nHeight: {self.height} cm\nWeight: {self.weight} kg\nEmail: {self.email_address}\nHealth Problem: {self.selected_problem}\nDate: {formatted_date}\n\n'
         input_text = full_info
 
+        # Reading from a JSON file
         def read_json_from_file(self,file_path):
             try:
-                with open(file_path, 'r') as file: # This opens the file in read mode
+                with open(file_path, 'r') as file: # Reading mode "r"
                     try:
                         data = json.load(file)
                     except:
                         data = []
-            except FileNotFoundError: # If file is not found then this error occurs
+            except FileNotFoundError: # If file is not found that is the error shown
                 data = []
             return data
 
+        # Writing from a JSON file
         def write_json_to_file(self,file_path, data):
-            with open(file_path, 'w') as file: # Uses as writing mode
+            with open(file_path, 'w') as file:
                 json.dump(data, file, indent=2)
+                
         # Initialize an empty dictionary to store the data
         data = {}
 
@@ -291,23 +296,26 @@ class InjuryPreventionApp:
 
         # Write the updated JSON data back to the file
         write_json_to_file(self,file_path, existing_data)
-
+        
+        # Medical History button and features
         def show_medical(self):
             file_path = self.file_path
-            existing_data = read_json_from_file(self,file_path) # Uses this data to for past medical history applications
+            existing_data = read_json_from_file(self,file_path) # Finds existing data from the json file
             text = ck.CTkTextbox(self.bottom_frame2, wrap=tk.WORD, width=300, height=250, padx=5, pady=5, font=('Helvetica', 12))
             text.grid(row=0, column=1, padx=10, pady=10)
-            for entry in existing_data:
+            for entry in existing_data: # If user email address is the same then show previous
                 for email, details in entry.items():
                     if email == self.email_address:
                         self.text.insert(tk.END, f"Email: {email}\n")
                         for key, value in details.items():
                             text.insert(tk.END, f"{key}: {value}\n")
                         text.insert(tk.END, '\n')
+                        
         # Stops command from automatically executing due to the self variable
-        medical_history = ck.CTkButton(self.button_frame , text="Medical History", command=lambda:show_medical(self))
+        medical_history = ck.CTkButton(self.button_frame , text="Medical History", command=lambda:show_medical(self)) 
         medical_history.grid(row=0, column=1, padx=10, pady=10)
 
+    # Show More Button 
     def show_more(self):
             if self.selected_problem == 'Broken Bone':
                 self.broken()
@@ -317,8 +325,7 @@ class InjuryPreventionApp:
                 self.dislocation()
             elif self.selected_problem == 'Bruise':
                 self.bruise()
-                
-    # This shows the user there details
+
     def show_user_info(self):
         user_info = f'First name: {self.first_name}\nLast name: {self.last_name}\nAge: {self.age} years old\nHeight: {self.height} cm\nWeight: {self.weight} kg\nEmail: {self.email_address}\nHealth Problem: {self.selected_problem}\n\n'
         self.text.insert(tk.END, user_info)
